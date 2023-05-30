@@ -62,12 +62,24 @@
   </div>
 
   <script>
-    // Fetch repositories from GitHub API
-    fetch('https://api.github.com/users/n0tic/repos')
-      .then(response => response.json())
-      .then(data => {
-        // Iterate through each repository and add it to the list
-        data.forEach(repo => {
+  // Fetch repositories from GitHub API
+  fetch('https://api.github.com/users/n0tic/repos')
+    .then(response => response.json())
+    .then(data => {
+      // Define the repositories to be hidden
+      const hiddenRepos = [
+        'ApexLegendsSystem',
+        'DownloadMerger',
+        'Localization',
+        'n0tic',
+        'n0tic.github.io',
+        'SimpleCharacterCreationV1',
+        'TwitchBot-Queue-Automation-System'
+      ];
+
+      // Iterate through each repository and add it to the list if not in hiddenRepos
+      data.forEach(repo => {
+        if (!hiddenRepos.includes(repo.name)) {
           var repoLink = document.createElement('a');
           repoLink.href = repo.html_url;
           repoLink.textContent = repo.name;
@@ -75,9 +87,10 @@
           var listItem = document.createElement('li');
           listItem.appendChild(repoLink);
           document.getElementById('repo-list').appendChild(listItem);
-        });
-      })
-      .catch(error => console.log(error));
-  </script>
+        }
+      });
+    })
+    .catch(error => console.log(error));
+</script>
 </body>
 </html>
