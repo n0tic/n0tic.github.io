@@ -5,9 +5,9 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #f7f7f7;
       margin: 0;
       padding: 0;
+      background-color: #333;
     }
 
     .header {
@@ -21,8 +21,20 @@
       margin: 0;
     }
 
-    .repo-list {
+    .content {
+      background-color: #545454;
       padding: 20px;
+      text-align: center;
+      width: 650px;
+      margin: 0 auto;
+    }
+
+    .repo-list {
+      background-color: #545454;
+      padding: 20px;
+      border-radius: 4px;
+      text-align: left;
+      color: #fff;
     }
 
     ul {
@@ -35,8 +47,14 @@
     }
 
     a {
-      color: #333;
+      color: #fff;
       text-decoration: none;
+    }
+
+    .repo-description {
+      font-style: italic;
+      color: #ccc;
+      margin-top: 5px;
     }
 
     .footer {
@@ -53,8 +71,10 @@
     <h1>My Repositories</h1>
   </div>
 
-  <div class="repo-list">
-    <ul id="repo-list"></ul>
+  <div class="content">
+    <div class="repo-list">
+      <ul id="repo-list"></ul>
+    </div>
   </div>
 
   <div class="footer">
@@ -62,35 +82,66 @@
   </div>
 
   <script>
-  // Fetch repositories from GitHub API
-  fetch('https://api.github.com/users/n0tic/repos')
-    .then(response => response.json())
-    .then(data => {
-      // Define the repositories to be hidden
-      const hiddenRepos = [
-        'ApexLegendsSystem',
-        'DownloadMerger',
-        'Localization',
-        'n0tic',
-        'n0tic.github.io',
-        'SimpleCharacterCreationV1',
-        'TwitchBot-Queue-Automation-System'
-      ];
-
-      // Iterate through each repository and add it to the list if not in hiddenRepos
-      data.forEach(repo => {
-        if (!hiddenRepos.includes(repo.name)) {
+    // Fetch repositories from GitHub API
+    fetch('https://api.github.com/users/n0tic/repos')
+      .then(response => response.json())
+      .then(data => {
+        // Define the repositories to be placed at the top
+        const topRepos = [
+          'SteamServerCreationTool',
+          'FFmpeg-UI-Utilizer',
+          'Duplicate-File-Finder',
+          'EasyColorPicker',
+          'ByteVault-Library',
+          'KeypadSystem'
+        ];
+  
+        // Define the repositories to be hidden
+        const hiddenRepos = [
+          'ApexLegendsSystem',
+          'DownloadMerger',
+          'Localization',
+          'n0tic',
+          'n0tic.github.io',
+          'SimpleCharacterCreationV1',
+          'TwitchBot-Queue-Automation-System'
+        ];
+  
+        // Filter the repositories to exclude the hidden ones
+        const filteredRepos = data.filter(repo => !hiddenRepos.includes(repo.name));
+  
+        // Sort the repositories to place the top ones first
+        const sortedRepos = filteredRepos.sort((a, b) => {
+          const aIndex = topRepos.indexOf(a.name);
+          const bIndex = topRepos.indexOf(b.name);
+          if (aIndex !== -1 && bIndex !== -1) {
+            return aIndex - bIndex;
+          } else if (aIndex !== -1) {
+            return -1;
+          } else if (bIndex !== -1) {
+            return 1;
+          } else {
+            return 0;
+          }
+        });
+  
+        // Iterate through each repository and add it to the list
+        sortedRepos.forEach(repo => {
           var repoLink = document.createElement('a');
           repoLink.href = repo.html_url;
           repoLink.textContent = repo.name;
-
+  
+          var repoDescription = document.createElement('p');
+          repoDescription.className = 'repo-description';
+          repoDescription.textContent = repo.description;
+  
           var listItem = document.createElement('li');
           listItem.appendChild(repoLink);
+          listItem.appendChild(repoDescription);
           document.getElementById('repo-list').appendChild(listItem);
-        }
-      });
-    })
-    .catch(error => console.log(error));
-</script>
+        });
+      })
+      .catch(error => console.log(error));
+  </script>
 </body>
 </html>
