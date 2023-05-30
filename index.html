@@ -3,17 +3,63 @@
 <head>
   <title>N0tiC's Github Repositories</title>
   <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f7f7f7;
+      margin: 0;
+      padding: 0;
+    }
+
+    .header {
+      background-color: #333;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+    }
+
+    h1 {
+      margin: 0;
+    }
+
+    .repo-list {
+      padding: 20px;
+    }
+
     ul {
       list-style-type: none;
+      padding: 0;
     }
+
     li {
       margin-bottom: 10px;
+    }
+
+    a {
+      color: #333;
+      text-decoration: none;
+    }
+
+    .footer {
+      background-color: #333;
+      color: #fff;
+      padding: 10px;
+      text-align: center;
+      font-size: 12px;
     }
   </style>
 </head>
 <body>
-  <h1>My Repositories</h1>
-  <ul id="repo-list"></ul>
+  <div class="header">
+    <h1>My Repositories</h1>
+  </div>
+
+  <div class="repo-list">
+    <ul id="repo-list"></ul>
+  </div>
+
+  <div class="footer">
+    &copy; 2023 N0tiC | Powered by GitHub
+  </div>
 
   <script>
     // Fetch repositories from GitHub API
