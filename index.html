@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>N0tiC's Github Repositories</title>
+  <style>
+    ul {
+      list-style-type: none;
+    }
+    li {
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>My Repositories</h1>
+  <ul id="repo-list"></ul>
+
+  <script>
+    // Fetch repositories from GitHub API
+    fetch('https://api.github.com/users/n0tic/repos')
+      .then(response => response.json())
+      .then(data => {
+        // Iterate through each repository and add it to the list
+        data.forEach(repo => {
+          var repoLink = document.createElement('a');
+          repoLink.href = repo.html_url;
+          repoLink.textContent = repo.name;
+
+          var listItem = document.createElement('li');
+          listItem.appendChild(repoLink);
+          document.getElementById('repo-list').appendChild(listItem);
+        });
+      })
+      .catch(error => console.log(error));
+  </script>
+</body>
+</html>
