@@ -68,7 +68,7 @@
 </head>
 <body>
   <div class="header">
-    <h1>My Repositories</h1>
+    <h1><a href="https://github.com/n0tic" target="_blank">N0tiC's Github Repositories</a></h1>
   </div>
 
   <div class="content">
@@ -130,6 +130,7 @@
           var repoLink = document.createElement('a');
           repoLink.href = repo.html_url;
           repoLink.textContent = repo.name;
+          repoLink.target = "_blank"; // Open link in a new tab
   
           var repoDescription = document.createElement('p');
           repoDescription.className = 'repo-description';
